@@ -1,4 +1,7 @@
 alphabet = "abcdefghijklmnñopqrstuvwxyz"
+import re
+import nltk
+import numpy as np
 
 def limpiar(x):
     contadorTildes = 0
@@ -74,3 +77,13 @@ def DVigenere(k,x, M):
         decriptado += M[letra]
         contador+=1
     return decriptado
+
+def probabilidades(text):
+    arreglo = re.findall('.',text)  #MONOGRAMA
+    arreglo = nltk.FreqDist(arreglo) # DISTRIBUCION
+    arr = []
+    for i in arreglo:
+        arr.append(arreglo[i]) # INGRESAR VALORES A ARRAY
+
+    arr = np.array(arr) #CONVERTIR EN ARRAY DE NUMPY
+    return(arr/arr.sum())
