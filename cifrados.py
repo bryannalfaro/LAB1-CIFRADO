@@ -79,11 +79,19 @@ def DVigenere(k,x, M):
     return decriptado
 
 def probabilidades(text):
+    text = limpiar(text)
     arreglo = re.findall('.',text)  #MONOGRAMA
     arreglo = nltk.FreqDist(arreglo) # DISTRIBUCION
-    arr = []
-    for i in arreglo:
-        arr.append(arreglo[i]) # INGRESAR VALORES A ARRAY
+    a = dict(arreglo) #CONVERTIR DICCIONARIO
+    suma = 0
+    for i in a:
+        suma+= a.get(i) #OBTENER TOTAL
 
-    arr = np.array(arr) #CONVERTIR EN ARRAY DE NUMPY
-    return(arr/arr.sum())
+    for i in a:
+        a[i]=a.get(i)/suma # PROBABILIDADES
+
+    for i in alphabet:
+        if i not in a:
+            a[i] = 0 #AGREGAR 0 PARA LETRAS QUE NO ESTEN
+
+    return(a)
