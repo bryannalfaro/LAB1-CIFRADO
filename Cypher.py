@@ -22,20 +22,20 @@ frecuencias divido el total de caracteres). (Sugerencia: Es recomendable complet
 con probabilidad 0.)
 
 '''
-file1 = open("cipher1.txt","r")
+file1 = open("cipher1.txt","r",encoding="utf-8")
 file1 = file1.read()
 print('')
 print(probabilidades(file1))
 print('')
-file2 = open("cipher2.txt","r")
+file2 = open("cipher2.txt","r",encoding="utf-8")
 file2 = file2.read()
 print(probabilidades(file2))
 print('')
-file3 = open("cipher3.txt","r")
+file3 = open("cipher3.txt","r", encoding="utf-8")
 file3 = file3.read()
 print(probabilidades(file3))
 print('')
-print(metrica(probabilidades(file3))) #Solo para probar
+print('Error ',metrica(probabilidades(file3))) #Solo para probar
 
 #fuerza bruta
 '''

@@ -3,6 +3,7 @@ import re
 import nltk
 import numpy as np
 import math
+import collections
 
 def limpiar(x):
     contadorTildes = 0
@@ -103,13 +104,21 @@ def metrica(text):
     sumaw = 0
     total = 0
     d = {}
+    text=collections.OrderedDict(sorted(text.items()))
+
     with open("sp_frequencies.txt", encoding="utf-8") as f:
         for line in f:
             (key, val) = line.split('	')
             d[key] = float(val)
 
+    d=collections.OrderedDict(sorted(d.items()))
+
+    for key in d:
+        d[key] = (d[key]/100)
+
     for i in text:
         sumaw +=((d[i] - text[i])**2) #aqui se debe reemplazar por la distribucion teorica del español
         total +=1
+
     err = math.sqrt((sumaw)/(total*(total-1)))
     return(err)
