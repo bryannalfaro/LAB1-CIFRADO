@@ -35,4 +35,9 @@ file3 = open("cipher3.txt","r")
 file3 = file3.read()
 print(probabilidades(file3))
 print('')
-print(metrica(probabilidades(file3),probabilidades(file2))) #Solo para probar
+print(metrica(probabilidades(file3))) #Solo para probar
+
+#fuerza bruta
+'''
+decriptar, luego calcular prob, luego metrica y guardar en array K, error
+'''

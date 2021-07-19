@@ -98,12 +98,18 @@ def probabilidades(text):
     return(a)
 
 #formula seguida: https://ekuatio.com/error-absolutos-y-error-relativos-que-son-y-como-se-calculan/
-def metrica(text,text2):
+def metrica(text):
 
     sumaw = 0
     total = 0
+    d = {}
+    with open("sp_frequencies.txt", encoding="utf-8") as f:
+        for line in f:
+            (key, val) = line.split('	')
+            d[key] = float(val)
+
     for i in text:
-        sumaw +=((text[i] - text2[i])**2) #aqui se debe reemplazar por la distribucion teorica del español
+        sumaw +=((d[i] - text[i])**2) #aqui se debe reemplazar por la distribucion teorica del español
         total +=1
     err = math.sqrt((sumaw)/(total*(total-1)))
     return(err)
