@@ -2,12 +2,13 @@ alphabet = "abcdefghijklmnñopqrstuvwxyz"
 import re
 import nltk
 import numpy as np
+import math
 
 def limpiar(x):
     contadorTildes = 0
-    tildes = ['Á','É','í','Ó','Ú']
-    sintildes = ['A','E','I','O','U']
-    caracteres = [' ', '.', ',','(', ')','1', '0', '2', '3', '4', '5', '6', '7', '8', '9',':','?',"-","/","¿","[","]"]
+    tildes = ['á','é','í','ó','ú','ã']
+    sintildes = ['a','e','i','o','u','']
+    caracteres = [' ', '.', ',','(', ')','1', '0', '2', '3', '4', '5', '6', '7', '8', '9',':','?',"-","/","¿","[","]","‘"]
     txt = x.lower() #todas minusculas
     #Limpiando tildes
     for letra in tildes:
@@ -95,3 +96,14 @@ def probabilidades(text):
             a[i] = 0 #AGREGAR 0 PARA LETRAS QUE NO ESTEN
 
     return(a)
+
+#formula seguida: https://ekuatio.com/error-absolutos-y-error-relativos-que-son-y-como-se-calculan/
+def metrica(text,text2):
+
+    sumaw = 0
+    total = 0
+    for i in text:
+        sumaw +=((text[i] - text2[i])**2) #aqui se debe reemplazar por la distribucion teorica del español
+        total +=1
+    err = math.sqrt((sumaw)/(total*(total-1)))
+    return(err)
