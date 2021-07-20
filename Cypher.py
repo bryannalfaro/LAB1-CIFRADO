@@ -5,15 +5,26 @@ Integrantes:
 Bryann Alfaro
 Diego Arredondo
 Julio Herrera
+
+
+https://es.regionkosice.com/wiki/Affine_cipher
+https://www.w3resource.com/python-exercises/basic/python-basic-1-exercise-119.php
+https://www.iteramos.com/pregunta/82300/funcion-inversa-multiplicativa-modular-en-python
 '''
 from cifrados import *
 
 print('Encriptado caesar:',ECaesar(3,'HOLAMUNDO',alphabet))
-print('Decriptado caesar:',DCaesar(3,'krñdoxpgr',alphabet))
-print('Encriptado afin:',EAfin(1,1,'HOLAMUNDO',alphabet))
-print('Decriptado afin:',DAfin(1,1,'ipmbnvñep',alphabet))
+caesar = ECaesar(3,'HOLAMUNDO',alphabet)
+print('Decriptado caesar:',DCaesar(3,caesar,alphabet))
+
+print('Encriptado afin:',EAfin(5,15,'plantanuclear',alphabet))
+afin = EAfin(5,15,'plantanuclear',alphabet)
+print('Decriptado afin:',DAfin(5,15,afin,alphabet))
+
+
 print('Encriptado vigenere:',EVigenere('CRYPTO','HOLAMUNDO',alphabet))
-print('Decriptado vigenere:',DVigenere('CRYPTO','jgjpfjoun',alphabet))
+vigenere =EVigenere('CRYPTO','HOLAMUNDO',alphabet)
+print('Decriptado vigenere:',DVigenere('CRYPTO',vigenere,alphabet))
 
 '''
 b) Construir una funci ́on que calcule las distribuci ́on de los caracteres que aparecen en el texto cifrado. Aqu ́ı, por ejemplo, se
@@ -22,18 +33,40 @@ frecuencias divido el total de caracteres). (Sugerencia: Es recomendable complet
 con probabilidad 0.)
 
 '''
-file1 = open("cipher1.txt","r")
+file1 = open("cipher1.txt","r",encoding="utf-8")
 file1 = file1.read()
 print('')
-print(probabilidades(file1))
+#print(probabilidades(file1))
 print('')
-file2 = open("cipher2.txt","r")
+file2 = open("cipher2.txt","r",encoding="utf-8")
 file2 = file2.read()
-print(probabilidades(file2))
+#print(probabilidades(file2))
 print('')
-file3 = open("cipher3.txt","r")
+file3 = open("cipher3.txt","r", encoding="utf-8")
 file3 = file3.read()
-print(probabilidades(file3))
+#print(probabilidades(file3))
 print('')
+#print('Error ',metrica(probabilidades(file3))) #Solo para probar
 
-print(fuerzaBrutaCaesar(file1))
+#fuerza bruta
+'''
+decriptar, luego calcular prob, luego metrica y guardar en array K, error
+'''
+sort = fuerzaC(file1)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print('Decriptado caesar:',DCaesar(int(list(sort.keys())[0]),file1,alphabet))
+
+
+sort = fuerzaA(file2)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print('')
+print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],file2,alphabet))
+'''
+sort = fuerzaV(file3)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print(sort)
+print('Decriptado Vigenere:',DVigenere('pqrs',file3,alphabet))
+
+print('')
+print('')
+'''
