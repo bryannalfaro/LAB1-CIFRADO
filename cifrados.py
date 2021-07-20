@@ -34,6 +34,7 @@ def ECaesar(k, x, M):
 
 def DCaesar(k, x, M):
     decriptado = ''
+    x= limpiar(x)
 
     for w in x:
         letra = (M.find(w)-k) % (len(M))
@@ -42,6 +43,7 @@ def DCaesar(k, x, M):
 
 #Cifrado afin
 
+#Corregir para validar que sea coprimo
 def EAfin(a,b,x,M):
     x = limpiar(x)
     encriptado = ''
@@ -50,14 +52,27 @@ def EAfin(a,b,x,M):
         encriptado += M[letra]
     return encriptado
 
-def DAfin(a,b,x,M):
-    decriptado = ''
-    for w in x:
-        letra = int(((M.find(w))-(b))/a)%(len(M))
-        decriptado += M[letra]
-    return decriptado
 
-#Cifrado vigenere
+def gcd(p,q):
+# Create the gcd of two positive integers.
+    while q != 0:
+        p, q = q, p%q
+    return p
+
+def is_coprime(x, y):
+    return gcd(x, y) == 1
+
+def DAfin(a,b,x,M):
+        decriptado = ''
+        x = limpiar(x)
+
+        for w in x:
+            h = ((M.find(w))-(b))
+            letra = (int(pow(a,len(M)-2,len(M)))*(h))%(len(M))
+            decriptado += M[letra]
+        return decriptado
+
+#Cifrado vigenerep
 
 def EVigenere(k,x, M):
     x = limpiar(x)
@@ -72,6 +87,7 @@ def EVigenere(k,x, M):
 
 def DVigenere(k,x, M):
     decriptado = ''
+    x = limpiar(x)
     contador = 0
     k = limpiar(k)
     for w in x:
@@ -80,6 +96,7 @@ def DVigenere(k,x, M):
         contador+=1
     return decriptado
 
+#Diccionario de probabilidades
 def probabilidades(text):
     text = limpiar(text)
     arreglo = re.findall('.',text)  #MONOGRAMA
@@ -100,7 +117,6 @@ def probabilidades(text):
 
 #formula seguida: https://ekuatio.com/error-absolutos-y-error-relativos-que-son-y-como-se-calculan/
 def metrica(text):
-
     sumaw = 0
     total = 0
     d = {}
@@ -117,8 +133,38 @@ def metrica(text):
         d[key] = (d[key]/100)
 
     for i in text:
-        sumaw +=((d[i] - text[i])**2) #aqui se debe reemplazar por la distribucion teorica del español
+        sumaw +=((d[i] - text[i])**2)
         total +=1
 
     err = math.sqrt((sumaw)/(total*(total-1)))
     return(err)
+
+
+def fuerzaC(text):
+    dict = {}
+    for i in range(len(alphabet)):
+        t = DCaesar(i,text,alphabet)
+        p = probabilidades(t)
+        dict[i]=metrica(p)
+    return dict
+
+def fuerzaA(text):
+    dict = {}
+    for i in range(len(alphabet)):
+
+        for j in range(len(alphabet)):
+
+            t = DAfin((i+1),(j),text,alphabet)
+            p = probabilidades(t)
+            str = (i+1),(j)
+            dict[str]=metrica(p)
+    return dict
+
+def fuerzaV(text):
+    dict = {}
+    for i in range(len(alphabet)):
+        print(alphabet[i])
+        t = DVigenere(alphabet[i],text,alphabet)
+        p = probabilidades(t)
+        dict[alphabet[i]]=metrica(p)
+    return dict

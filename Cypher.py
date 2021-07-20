@@ -25,19 +25,37 @@ con probabilidad 0.)
 file1 = open("cipher1.txt","r",encoding="utf-8")
 file1 = file1.read()
 print('')
-print(probabilidades(file1))
+#print(probabilidades(file1))
 print('')
 file2 = open("cipher2.txt","r",encoding="utf-8")
 file2 = file2.read()
-print(probabilidades(file2))
+#print(probabilidades(file2))
 print('')
 file3 = open("cipher3.txt","r", encoding="utf-8")
 file3 = file3.read()
-print(probabilidades(file3))
+#print(probabilidades(file3))
 print('')
-print('Error ',metrica(probabilidades(file3))) #Solo para probar
+#print('Error ',metrica(probabilidades(file3))) #Solo para probar
 
 #fuerza bruta
 '''
 decriptar, luego calcular prob, luego metrica y guardar en array K, error
+'''
+sort = fuerzaC(file1)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print('Decriptado caesar:',DCaesar(int(list(sort.keys())[0]),file1,alphabet))
+
+
+sort = fuerzaA(file2)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print('')
+print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],file2,alphabet))
+'''
+sort = fuerzaV(file3)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print(sort)
+print('Decriptado Vigenere:',DVigenere('o',file3,alphabet))
+
+print('')
+print('')
 '''
