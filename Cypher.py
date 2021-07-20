@@ -5,15 +5,26 @@ Integrantes:
 Bryann Alfaro
 Diego Arredondo
 Julio Herrera
+
+
+https://es.regionkosice.com/wiki/Affine_cipher
+https://www.w3resource.com/python-exercises/basic/python-basic-1-exercise-119.php
+https://www.iteramos.com/pregunta/82300/funcion-inversa-multiplicativa-modular-en-python
 '''
 from cifrados import *
 
 print('Encriptado caesar:',ECaesar(3,'HOLAMUNDO',alphabet))
-print('Decriptado caesar:',DCaesar(3,'krñdoxpgr',alphabet))
-print('Encriptado afin:',EAfin(1,1,'HOLAMUNDO',alphabet))
-print('Decriptado afin:',DAfin(1,1,'ipmbnvñep',alphabet))
+caesar = ECaesar(3,'HOLAMUNDO',alphabet)
+print('Decriptado caesar:',DCaesar(3,caesar,alphabet))
+
+print('Encriptado afin:',EAfin(5,15,'plantanuclear',alphabet))
+afin = EAfin(5,15,'plantanuclear',alphabet)
+print('Decriptado afin:',DAfin(5,15,afin,alphabet))
+
+
 print('Encriptado vigenere:',EVigenere('CRYPTO','HOLAMUNDO',alphabet))
-print('Decriptado vigenere:',DVigenere('CRYPTO','jgjpfjoun',alphabet))
+vigenere =EVigenere('CRYPTO','HOLAMUNDO',alphabet)
+print('Decriptado vigenere:',DVigenere('CRYPTO',vigenere,alphabet))
 
 '''
 b) Construir una funci ́on que calcule las distribuci ́on de los caracteres que aparecen en el texto cifrado. Aqu ́ı, por ejemplo, se
@@ -54,7 +65,7 @@ print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],f
 sort = fuerzaV(file3)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
 print(sort)
-print('Decriptado Vigenere:',DVigenere('o',file3,alphabet))
+print('Decriptado Vigenere:',DVigenere('pqrs',file3,alphabet))
 
 print('')
 print('')
