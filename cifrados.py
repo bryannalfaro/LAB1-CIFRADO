@@ -3,6 +3,7 @@ import nltk
 import numpy as np
 import math
 import collections
+import itertools
 
 alphabet = "abcdefghijklmnñopqrstuvwxyz"
 freqLetrasEspanol = {
@@ -194,9 +195,15 @@ def fuerzaA(text):
 
 def fuerzaV(text):
     dict = {}
-    arreglo = re.findall('.',alphabet)  #MONOGRAM
+    arreglo = itertools.product(alphabet,repeat=4)  #MONOGRAM
+    arreglo = list(arreglo)
+    contador =0
+    #for i in arreglo:
+        #print("".join(arreglo[contador]))
+        #contador+=1
+
     for i in range(len(arreglo)):
-        t = DVigenere(arreglo[i],text,alphabet)
+        t = DVigenere("".join(arreglo[i]),text,alphabet)
         p = probabilidades(t)
         dict[arreglo[i]]=metrica(p)
     return dict
