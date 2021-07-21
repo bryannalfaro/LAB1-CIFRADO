@@ -53,14 +53,14 @@ def DCaesar(k, x, M):
 #Cifrado afin
 
 def gcd(p,q):
-# Create the gcd of two positive integers.
+# Crea el gcd de dos numeros.
     while q != 0:
         p, q = q, p%q
     return p
 
 def is_coprime(x, y):
     return gcd(x, y) == 1
-#Corregir para validar que sea coprimo
+
 def EAfin(a,b,x,M):
     if(is_coprime(a,len(M))):
         x = limpiar(x)
@@ -195,7 +195,7 @@ def fuerzaA(text):
 
 def fuerzaV(text):
     dict = {}
-    arreglo = itertools.product(alphabet,repeat=4)  #MONOGRAM
+    arreglo = itertools.product(alphabet,repeat=4)
     arreglo = list(arreglo)
     contador =0
     #for i in arreglo:
