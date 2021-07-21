@@ -3,6 +3,8 @@ import nltk
 import numpy as np
 import math
 import collections
+import itertools
+import concurrent.futures
 
 alphabet = "abcdefghijklmnñopqrstuvwxyz"
 freqLetrasEspanol = {
@@ -192,11 +194,32 @@ def fuerzaA(text):
             dict[str]=metrica(p)
     return dict
 
-def fuerzaV(text):
+def thread_v(k, text):
+    #print(k)
+    t = DVigenere(k,text,alphabet)
+    p = probabilidades(t)
+    return metrica(p)
+
+def fuerzaV(text, n):
     dict = {}
-    arreglo = re.findall('.',alphabet)  #MONOGRAM
-    for i in range(len(arreglo)):
-        t = DVigenere(arreglo[i],text,alphabet)
-        p = probabilidades(t)
-        dict[arreglo[i]]=metrica(p)
+    for i in range(1,n):
+        comb = itertools.product(alphabet, repeat=i)
+        espacioK = [''.join(j) for j in comb]
+        '''
+        for k in espacioK:
+            #t = DVigenere(k,text,alphabet)
+            #p = probabilidades(t)
+
+            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+                #dict[k] = executor.map(thread_v, k, espacioK)
+                future = executor.submit(thread_v, k, text)
+                return_value = future.result()
+                dict[k] = return_value
+        '''
+        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
+            # Start the load operations and mark each future with its URL
+            future_to_url = {executor.submit(thread_v, k, text): k for k in espacioK}
+            for future in concurrent.futures.as_completed(future_to_url):
+                url = future_to_url[future]
+                print(url)
     return dict

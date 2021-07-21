@@ -65,6 +65,7 @@ sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
 print(f'Llaves: {list(sort.keys())[0][0]} y {list(sort.keys())[0][1]}')
 print(f'error {sort[list(sort.keys())[0]]}%')
 print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],file2,alphabet))
+
 '''
 sort = fuerzaV(file3)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
@@ -74,3 +75,15 @@ print('Decriptado Vigenere:',DVigenere('pqrs',file3,alphabet))
 print('')
 print('')
 '''
+
+print('')
+
+sort = fuerzaV(file3, 6)
+sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print(f'Llave: {list(sort.keys())[0]}')
+print(f'Llave: {list(sort.keys())[1]}')
+print(f'Llave: {list(sort.keys())[2]}')
+print(f'error {sort[list(sort.keys())[0]]}%')
+print('Decriptado Vigenere:',DVigenere(list(sort.keys())[0],file3,alphabet))
+print('Decriptado Vigenere:',DVigenere(list(sort.keys())[1],file3,alphabet))
+print('Decriptado Vigenere:',DVigenere(list(sort.keys())[2],file3,alphabet))
