@@ -54,12 +54,16 @@ decriptar, luego calcular prob, luego metrica y guardar en array K, error
 '''
 sort = fuerzaC(file1)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
+print(f'Llave {list(sort.keys())[0]}')
+print(f'error {sort[list(sort.keys())[0]]}%')
 print('Decriptado caesar:',DCaesar(int(list(sort.keys())[0]),file1,alphabet))
 
+print('')
 
 sort = fuerzaA(file2)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-print('')
+print(f'Llaves: {list(sort.keys())[0][0]} y {list(sort.keys())[0][1]}')
+print(f'error {sort[list(sort.keys())[0]]}%')
 print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],file2,alphabet))
 '''
 sort = fuerzaV(file3)

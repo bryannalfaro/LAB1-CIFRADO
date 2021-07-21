@@ -144,51 +144,33 @@ def probabilidades(text):
 
     return(a)
 
-def metrica2(distribution):
-    freqSorted = ordenar(freqLetrasEspanol)
-    distSorted = ordenar(distribution)
-    for i in freqSorted:
-        print(i[0],i[1])
-    for i in distSorted:
-        print(i[0],i[1])
-
 # Order dictionary by values
 def ordenar(d):
     return sorted(d.items(), key=lambda x: x[1], reverse=True)
 
-def fuerzaBrutaCaesar2(cypher):
-    bestKs = {}
-    print(cypher)
-    prob = probabilidades(cypher)
-    for i in range(len(alphabet)):
-        desc = DCaesar(i, cypher, alphabet)
-        print(i, desc)
-    return bestKs
-
 #formula seguida: https://ekuatio.com/error-absolutos-y-error-relativos-que-son-y-como-se-calculan/
-def metrica(text):
+def metrica(probs):
     sumaw = 0
     total = 0
     d = {}
-    text=collections.OrderedDict(sorted(text.items()))
-
+    probs=collections.OrderedDict(sorted(probs.items()))
+    ''' Use la tabla de frecuencias que esta arriba, creo que esta mejor porque suma las tildes
     with open("sp_frequencies.txt", encoding="utf-8") as f:
         for line in f:
             (key, val) = line.split('	')
             d[key] = float(val)
 
     d=collections.OrderedDict(sorted(d.items()))
+    '''
+    for key in freqLetrasEspanol:
+        d[key] = (freqLetrasEspanol[key]/100)
 
-    for key in d:
-        d[key] = (d[key]/100)
-
-    for i in text:
-        sumaw +=((d[i] - text[i])**2)
+    for i in probs:
+        sumaw +=((d[i] - probs[i])**2)
         total +=1
 
     err = math.sqrt((sumaw)/(total*(total-1)))
     return(err)
-
 
 def fuerzaC(text):
     dict = {}
