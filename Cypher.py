@@ -5,11 +5,6 @@ Integrantes:
 Bryann Alfaro
 Diego Arredondo
 Julio Herrera
-
-
-https://es.regionkosice.com/wiki/Affine_cipher
-https://www.w3resource.com/python-exercises/basic/python-basic-1-exercise-119.php
-https://www.iteramos.com/pregunta/82300/funcion-inversa-multiplicativa-modular-en-python
 '''
 from cifrados import *
 
@@ -26,13 +21,6 @@ print('Encriptado vigenere:',EVigenere('CRYPTO','HOLAMUNDO',alphabet))
 vigenere =EVigenere('CRYPTO','HOLAMUNDO',alphabet)
 print('Decriptado vigenere:',DVigenere('CRYPTO',vigenere,alphabet))
 
-'''
-b) Construir una funci ́on que calcule las distribuci ́on de los caracteres que aparecen en el texto cifrado. Aqu ́ı, por ejemplo, se
-pueden usar funciones ya implementadas en NLTK. Sin embargo, se espera que su funci ́on calcule las probabilidades (las
-frecuencias divido el total de caracteres). (Sugerencia: Es recomendable completar las letras que no aparezcan en su texto,
-con probabilidad 0.)
-
-'''
 file1 = open("cipher1.txt","r",encoding="utf-8")
 file1 = file1.read()
 print('')
@@ -66,7 +54,11 @@ for i in range(1): # Cantidad de posibles claves a mostrar
     print('Decriptado afin:',DAfin(list(sort.keys())[i][0],list(sort.keys())[i][1],file2,alphabet))
     print('')
 
-sort = fuerzaV(file3)
+#Se hizo esto ya que el proceso fuerza bruta tarda demasiado en responder y por eso se realiza despues
+print('Decriptado Vigenere con llave conocida:',DVigenere('bees',file3,alphabet))
+print('')
+print('Iniciando fuerza bruta vigenere...\n')
+sort = fuerzaV(file3,4)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
 for i in range(1): # Cantidad de posibles claves a mostrar
     print(f'Llave: {list(sort.keys())[i]}')

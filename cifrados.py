@@ -1,3 +1,17 @@
+'''
+Universidad del Valle de Guatemala
+Universidad del valle de Guatemala
+Cifrado de la informacion - laboratorio 1
+Integrantes:
+Bryann Alfaro
+Diego Arredondo
+Julio Herrera
+
+Some references :
+https://es.regionkosice.com/wiki/Affine_cipher
+https://www.w3resource.com/python-exercises/basic/python-basic-1-exercise-119.php
+https://www.iteramos.com/pregunta/82300/funcion-inversa-multiplicativa-modular-en-python
+'''
 import re
 import nltk
 import math
@@ -50,7 +64,8 @@ def DCaesar(k, x, M):
     return decriptado
 
 #Cifrado afin
-
+#algoritmo de euclides
+#https://altocodigo.blogspot.com/2021/01/maximo-comun-divisor-mcd-en-python.html
 def gcd(p,q):
 # Crea el gcd de dos numeros.
     while q != 0:
@@ -182,10 +197,10 @@ def fuerzaA(text):
     print(f'Afin. Tiempo de ejecución: {stop - start} seconds')
     return dict
 
-def fuerzaV(text):
+def fuerzaV(text,n):
     start = time.time()
     dict = {}
-    arreglo = itertools.product(alphabet,repeat=4)
+    arreglo = itertools.product(alphabet,repeat=n)
     arreglo = list(arreglo)
 
     for i in range(len(arreglo)):
