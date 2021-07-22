@@ -164,7 +164,7 @@ def fuerzaC(text):
         p = probabilidades(t)
         dict[i]=metrica(p)
     stop = time.time()
-    print(f'Caesar execution time: {stop - start} seconds')
+    print(f'Caesar. Tiempo de ejecución: {stop - start} seconds')
     return dict
 
 def fuerzaA(text):
@@ -179,7 +179,7 @@ def fuerzaA(text):
             str = (i+1),(j)
             dict[str]=metrica(p)
     stop = time.time()
-    print(f'Afin execution time: {stop - start} seconds')
+    print(f'Afin. Tiempo de ejecución: {stop - start} seconds')
     return dict
 
 def fuerzaV(text):
@@ -194,5 +194,5 @@ def fuerzaV(text):
         p = probabilidades(t)
         dict[k]=metrica(p)
     stop = time.time()
-    print(f'Vigenere execution time: {stop - start} seconds')
+    print(f'Vigenere. Tiempo de ejecución: {stop - start} seconds')
     return dict

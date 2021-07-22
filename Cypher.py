@@ -50,7 +50,7 @@ print('')
 #fuerza bruta
 sort = fuerzaC(file1)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-for i in range(1):
+for i in range(1): # Cantidad de posibles claves a mostrar
     print(f'Llave {list(sort.keys())[i]}')
     print(f'error {sort[list(sort.keys())[i]]}%')
     print('Decriptado caesar:',DCaesar(int(list(sort.keys())[i]),file1,alphabet))
@@ -60,7 +60,7 @@ print('')
 
 sort = fuerzaA(file2)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-for i in range(1):
+for i in range(1): # Cantidad de posibles claves a mostrar
     print(f'Llaves: {list(sort.keys())[i][0]} y {list(sort.keys())[i][1]}')
     print(f'error {sort[list(sort.keys())[i]]}%')
     print('Decriptado afin:',DAfin(list(sort.keys())[i][0],list(sort.keys())[i][1],file2,alphabet))
@@ -68,9 +68,8 @@ for i in range(1):
 
 sort = fuerzaV(file3)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-for i in range(3):
+for i in range(1): # Cantidad de posibles claves a mostrar
     print(f'Llave: {list(sort.keys())[i]}')
     print(f'error {sort[list(sort.keys())[i]]}%')
     print('Decriptado Vigenere:',DVigenere(list(sort.keys())[i],file3,alphabet))
-
     print('')
