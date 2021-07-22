@@ -36,54 +36,41 @@ con probabilidad 0.)
 file1 = open("cipher1.txt","r",encoding="utf-8")
 file1 = file1.read()
 print('')
-#print(probabilidades(file1))
+
 print('')
 file2 = open("cipher2.txt","r",encoding="utf-8")
 file2 = file2.read()
-#print(probabilidades(file2))
+
 print('')
 file3 = open("cipher3.txt","r", encoding="utf-8")
 file3 = file3.read()
-#print(probabilidades(file3))
+
 print('')
-#print('Error ',metrica(probabilidades(file3))) #Solo para probar
 
 #fuerza bruta
-'''
-decriptar, luego calcular prob, luego metrica y guardar en array K, error
-'''
 sort = fuerzaC(file1)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-print(f'Llave {list(sort.keys())[0]}')
-print(f'error {sort[list(sort.keys())[0]]}%')
-print('Decriptado caesar:',DCaesar(int(list(sort.keys())[0]),file1,alphabet))
+for i in range(1):
+    print(f'Llave {list(sort.keys())[i]}')
+    print(f'error {sort[list(sort.keys())[i]]}%')
+    print('Decriptado caesar:',DCaesar(int(list(sort.keys())[i]),file1,alphabet))
+    print('')
 
 print('')
 
 sort = fuerzaA(file2)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-print(f'Llaves: {list(sort.keys())[0][0]} y {list(sort.keys())[0][1]}')
-print(f'error {sort[list(sort.keys())[0]]}%')
-print('Decriptado afin:',DAfin(list(sort.keys())[0][0],list(sort.keys())[0][1],file2,alphabet))
+for i in range(1):
+    print(f'Llaves: {list(sort.keys())[i][0]} y {list(sort.keys())[i][1]}')
+    print(f'error {sort[list(sort.keys())[i]]}%')
+    print('Decriptado afin:',DAfin(list(sort.keys())[i][0],list(sort.keys())[i][1],file2,alphabet))
+    print('')
 
-'''
 sort = fuerzaV(file3)
 sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-print(sort)
-print('Decriptado Vigenere:',DVigenere('pqrs',file3,alphabet))
+for i in range(3):
+    print(f'Llave: {list(sort.keys())[i]}')
+    print(f'error {sort[list(sort.keys())[i]]}%')
+    print('Decriptado Vigenere:',DVigenere(list(sort.keys())[i],file3,alphabet))
 
-print('')
-print('')
-'''
-
-print('')
-
-sort = fuerzaV(file3, 6)
-sort = {k: v for k, v in sorted(sort.items(), key=lambda item: item[1])}
-print(f'Llave: {list(sort.keys())[0]}')
-print(f'Llave: {list(sort.keys())[1]}')
-print(f'Llave: {list(sort.keys())[2]}')
-print(f'error {sort[list(sort.keys())[0]]}%')
-print('Decriptado Vigenere:',DVigenere(list(sort.keys())[0],file3,alphabet))
-print('Decriptado Vigenere:',DVigenere(list(sort.keys())[1],file3,alphabet))
-print('Decriptado Vigenere:',DVigenere(list(sort.keys())[2],file3,alphabet))
+    print('')

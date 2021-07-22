@@ -1,10 +1,8 @@
 import re
 import nltk
-import numpy as np
 import math
-import collections
 import itertools
-import concurrent.futures
+import time
 
 alphabet = "abcdefghijklmnñopqrstuvwxyz"
 freqLetrasEspanol = {
@@ -54,14 +52,14 @@ def DCaesar(k, x, M):
 #Cifrado afin
 
 def gcd(p,q):
-# Create the gcd of two positive integers.
+# Crea el gcd de dos numeros.
     while q != 0:
         p, q = q, p%q
     return p
 
 def is_coprime(x, y):
     return gcd(x, y) == 1
-#Corregir para validar que sea coprimo
+
 def EAfin(a,b,x,M):
     if(is_coprime(a,len(M))):
         x = limpiar(x)
@@ -74,6 +72,7 @@ def EAfin(a,b,x,M):
         return encriptado
     else:
         return ''
+
 # get from: https://stackoverflow.com/questions/4798654/modular-multiplicative-inverse-function-in-python
 def egcd(a, b):
     if a == 0:
@@ -133,12 +132,9 @@ def probabilidades(text):
     arreglo = re.findall('.',text)  #MONOGRAMA
     arreglo = nltk.FreqDist(arreglo) # DISTRIBUCION
     a = dict(arreglo) #CONVERTIR DICCIONARIO
-    suma = 0
-    for i in a:
-        suma+= a.get(i) #OBTENER TOTAL
 
     for i in a:
-        a[i]=a.get(i)/suma # PROBABILIDADES
+        a[i]=a.get(i)/len(text) # PROBABILIDADES
 
     for i in alphabet:
         if i not in a:
@@ -146,43 +142,33 @@ def probabilidades(text):
 
     return(a)
 
-# Order dictionary by values
-def ordenar(d):
-    return sorted(d.items(), key=lambda x: x[1], reverse=True)
-
 #formula seguida: https://ekuatio.com/error-absolutos-y-error-relativos-que-son-y-como-se-calculan/
 def metrica(probs):
     sumaw = 0
-    total = 0
     d = {}
-    probs=collections.OrderedDict(sorted(probs.items()))
-    ''' Use la tabla de frecuencias que esta arriba, creo que esta mejor porque suma las tildes
-    with open("sp_frequencies.txt", encoding="utf-8") as f:
-        for line in f:
-            (key, val) = line.split('	')
-            d[key] = float(val)
 
-    d=collections.OrderedDict(sorted(d.items()))
-    '''
     for key in freqLetrasEspanol:
         d[key] = (freqLetrasEspanol[key]/100)
 
     for i in probs:
         sumaw +=((d[i] - probs[i])**2)
-        total +=1
 
-    err = math.sqrt((sumaw)/(total*(total-1)))
+    err = math.sqrt((sumaw)/(len(alphabet)*(len(alphabet)-1)))
     return(err)
 
 def fuerzaC(text):
+    start = time.time()
     dict = {}
     for i in range(len(alphabet)):
         t = DCaesar(i,text,alphabet)
         p = probabilidades(t)
         dict[i]=metrica(p)
+    stop = time.time()
+    print(f'Caesar execution time: {stop - start} seconds')
     return dict
 
 def fuerzaA(text):
+    start = time.time()
     dict = {}
     for i in range(len(alphabet)):
 
@@ -192,34 +178,21 @@ def fuerzaA(text):
             p = probabilidades(t)
             str = (i+1),(j)
             dict[str]=metrica(p)
+    stop = time.time()
+    print(f'Afin execution time: {stop - start} seconds')
     return dict
 
-def thread_v(k, text):
-    #print(k)
-    t = DVigenere(k,text,alphabet)
-    p = probabilidades(t)
-    return metrica(p)
-
-def fuerzaV(text, n):
+def fuerzaV(text):
+    start = time.time()
     dict = {}
-    for i in range(1,n):
-        comb = itertools.product(alphabet, repeat=i)
-        espacioK = [''.join(j) for j in comb]
-        '''
-        for k in espacioK:
-            #t = DVigenere(k,text,alphabet)
-            #p = probabilidades(t)
+    arreglo = itertools.product(alphabet,repeat=4)
+    arreglo = list(arreglo)
 
-            with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-                #dict[k] = executor.map(thread_v, k, espacioK)
-                future = executor.submit(thread_v, k, text)
-                return_value = future.result()
-                dict[k] = return_value
-        '''
-        with concurrent.futures.ThreadPoolExecutor(max_workers=10) as executor:
-            # Start the load operations and mark each future with its URL
-            future_to_url = {executor.submit(thread_v, k, text): k for k in espacioK}
-            for future in concurrent.futures.as_completed(future_to_url):
-                url = future_to_url[future]
-                print(url)
+    for i in range(len(arreglo)):
+        k = "".join(arreglo[i])
+        t = DVigenere(k,text,alphabet)
+        p = probabilidades(t)
+        dict[k]=metrica(p)
+    stop = time.time()
+    print(f'Vigenere execution time: {stop - start} seconds')
     return dict
